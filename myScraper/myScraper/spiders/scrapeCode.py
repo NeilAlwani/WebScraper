@@ -6,15 +6,17 @@ class QuotesSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            'http://quotes.toscrape.com/page/1/',
-            'http://quotes.toscrape.com/page/2/',
+            'https://www.bol.com/nl/s/?searchtext=wireless+earphones&searchContext=media_all&appliedSearchContextId=&suggestFragment=&adjustedSection=&originalSection=main&originalSearchContext=media_all&section=main&N=0&defaultSearchContext=media_all&suggestionType=search_history'
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        page = response.url.split("/")[-2]
-        filename = 'quotes-%s.html' % page
-        with open(filename, 'wb') as f:
-            f.write(response.body)
-        self.log('Saved file %s' % filename)
+       for title in response.css('.product-title::text'):
+        yield{
+            "title": title.get()
+        }
+
+        #for post in response.css('div.results-area).
+        #   title = post.css('div.product-title--inline a::text')[0].get()
+        #   price = post.css('meta')[0].get
