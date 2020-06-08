@@ -31,5 +31,5 @@ class QuotesSpider(scrapy.Spider):
 
 
 
-            
+
 # Run with: scrapy crawl crawler -o qoutes.json
